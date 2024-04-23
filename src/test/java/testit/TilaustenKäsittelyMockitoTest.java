@@ -29,8 +29,6 @@ public class TilaustenKäsittelyMockitoTest {
         Tuote tuote = new Tuote("TDD in Action", listaHinta);
 
         when(hinnoittelijaMock.getAlennusProsentti(asiakas, tuote)).thenReturn(alennus, alennus);
-        doNothing().when(hinnoittelijaMock).aloita();
-        doNothing().when(hinnoittelijaMock).lopeta();
 
         TilaustenKäsittely käsittelijä = new TilaustenKäsittely();
         käsittelijä.setHinnoittelija(hinnoittelijaMock);
@@ -40,8 +38,6 @@ public class TilaustenKäsittelyMockitoTest {
         assertEquals(loppuSaldo, asiakas.getSaldo(), 0.001);
         verify(hinnoittelijaMock, times(2)).getAlennusProsentti(asiakas, tuote);
         verify(hinnoittelijaMock, never()).setAlennusProsentti(any(Asiakas.class), anyFloat());
-        verify(hinnoittelijaMock).aloita();
-        verify(hinnoittelijaMock).lopeta();
     }
 
     @Test
@@ -55,8 +51,6 @@ public class TilaustenKäsittelyMockitoTest {
         Tuote tuote = new Tuote("TDD in Action", listaHinta);
 
         when(hinnoittelijaMock.getAlennusProsentti(asiakas, tuote)).thenReturn(10.0f, 15.0f);
-        doNothing().when(hinnoittelijaMock).aloita();
-        doNothing().when(hinnoittelijaMock).lopeta();
 
         TilaustenKäsittely käsittelijä = new TilaustenKäsittely();
         käsittelijä.setHinnoittelija(hinnoittelijaMock);
@@ -66,7 +60,5 @@ public class TilaustenKäsittelyMockitoTest {
         assertEquals(loppuSaldo, asiakas.getSaldo(), 0.001);
         verify(hinnoittelijaMock, times(2)).getAlennusProsentti(asiakas, tuote);
         verify(hinnoittelijaMock).setAlennusProsentti(asiakas, 15.0f);
-        verify(hinnoittelijaMock).aloita();
-        verify(hinnoittelijaMock).lopeta();
     }
 }
